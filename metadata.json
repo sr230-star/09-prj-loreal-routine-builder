@@ -1,0 +1,8 @@
+{
+  "name": "L'Oréal | Smart Routine & Product Advisor",
+  "description": "Browse L'Oréal products, build a personalized beauty routine, and chat with an AI advisor powered by real-time web search.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>L'Oréal | Smart Routine &amp; Product Advisor</title>
+    <meta
+      name="description"
+      content="Browse L'Oréal products, build a personalized beauty routine, and chat with an AI advisor powered by real-time web search."
+    />
+    <meta property="og:title" content="L'Oréal | Smart Routine &amp; Product Advisor" />
+    <meta
+      property="og:description"
+      content="Browse L'Oréal products, build a personalized beauty routine, and chat with an AI advisor powered by real-time web search."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -15,74 +26,219 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body>
-    <div class="page-wrapper">
-      <!------- Header / Branding ------->
-      <header class="site-header">
-        <img src="img/loreal-logo.png" alt="L'Oréal Logo" class="logo" />
-        <h1 class="site-title">Smart Routine &amp; Product Advisor</h1>
-      </header>
+  <body id="top">
+    <!-- Top Navigation Bar -->
+    <header class="site-header">
+      <div class="header-inner">
+        <a href="#top" class="brand-lockup" aria-label="L'Oréal Home">
+          <img src="img/loreal-logo.png" alt="L'Oréal" class="logo" />
+        </a>
 
-      <!-- Category Filter -->
-      <div class="search-section">
-        <select id="categoryFilter">
-          <option value="" disabled selected>Choose a Category</option>
-          <option value="cleanser">Cleansers</option>
-          <option value="moisturizer">Moisturizers & Treatments</option>
-          <option value="haircare">Haircare</option>
-          <option value="makeup">Makeup</option>
-          <option value="hair color">Hair Color</option>
-          <option value="hair styling">Hair Styling</option>
-          <option value="men's grooming">Men's Grooming</option>
-          <option value="suncare">Suncare</option>
-          <option value="fragrance">Fragrance</option>
-        </select>
-      </div>
+        <nav class="site-nav" aria-label="Primary Navigation">
+          <a href="#catalog">Catalog</a>
+          <a href="#selected-routine">Routine</a>
+          <a href="#advisor">Advisor</a>
+        </nav>
 
-      <!-- Products Grid -->
-      <div id="productsContainer" class="products-grid"></div>
-
-      <!-- Selected Products -->
-      <div class="selected-products">
-        <h2>Selected Products</h2>
-        <div id="selectedProductsList"></div>
-        <button id="generateRoutine" class="generate-btn">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Routine
+        <button type="button" id="headerCta" class="header-cta">
+          Build Routine
         </button>
       </div>
+    </header>
 
-      <!------- Chat Area ------->
-      <section class="chatbox">
-        <h2>Let's Build Your Routine</h2>
-        <div id="chatWindow" class="chat-window"></div>
-
-        <form id="chatForm" class="chat-form">
-          <label for="userInput" class="visually-hidden">Message</label>
-          <input
-            id="userInput"
-            name="userInput"
-            type="text"
-            placeholder="Ask me about products or routines…"
-            autocomplete="off"
-            required
-          />
-          <button type="submit" id="sendBtn">
-            <i class="fa-solid fa-paper-plane"></i>
-            <span class="visually-hidden">Send</span>
-          </button>
-        </form>
+    <main class="page-wrapper">
+      <!-- Editorial Hero Intro -->
+      <section class="hero-intro" aria-labelledby="heroHeading">
+        <div class="hero-accent-line" aria-hidden="true"></div>
+        <h1 id="heroHeading" class="hero-title">
+          Curated Beauty Rituals, Personalized for You
+        </h1>
+        <p class="hero-subtitle">
+          Select L'Oréal Paris, CeraVe, La Roche-Posay, Lancôme, and partner formulas below to generate a tailored step-by-step routine and consult our real-time beauty advisor.
+        </p>
       </section>
 
-      <!------- Footer Links ------->
-      <footer class="site-footer">
-        <p>&copy; 2025 L'Oréal. All rights reserved.</p>
-        <nav>
-          <!-- These URLs are placeholders -->
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Use</a>
-          <a href="#">Contact</a>
+      <!-- Main Two-Column Studio Workspace -->
+      <div class="workspace-grid">
+        <!-- Left Column: Product Discovery & Catalog -->
+        <section id="catalog" class="catalog-section" aria-label="Product Catalog">
+          <!-- Workspace Toolbar: Search, Category Filter & RTL Toggle -->
+          <div class="catalog-toolbar">
+            <div class="search-field-wrap">
+              <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+              <label for="productSearch" class="visually-hidden">Search products</label>
+              <input
+                id="productSearch"
+                type="search"
+                placeholder="Search by product, brand, or ingredient…"
+                autocomplete="off"
+              />
+              <button
+                type="button"
+                id="clearSearchBtn"
+                class="clear-search-btn"
+                aria-label="Clear product search"
+                hidden
+              >
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <div class="toolbar-controls">
+              <label for="categoryFilter" class="visually-hidden">Filter by category</label>
+              <select id="categoryFilter">
+                <option value="" selected>All Categories</option>
+                <option value="cleanser">Cleansers</option>
+                <option value="moisturizer">Moisturizers</option>
+                <option value="skincare">Serums &amp; Treatments</option>
+                <option value="suncare">Suncare</option>
+                <option value="haircare">Haircare</option>
+                <option value="hair color">Hair Color</option>
+                <option value="hair styling">Hair Styling</option>
+                <option value="makeup">Makeup</option>
+                <option value="men's grooming">Men's Grooming</option>
+                <option value="fragrance">Fragrance</option>
+              </select>
+
+              <button
+                type="button"
+                id="rtlToggle"
+                class="rtl-toggle-btn"
+                aria-pressed="false"
+                title="Switch between Left-to-Right and Right-to-Left layout"
+              >
+                <i class="fa-solid fa-right-left" aria-hidden="true"></i>
+                <span id="rtlToggleLabel">RTL Mode</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="catalog-meta-bar">
+            <p id="catalogCount" class="catalog-count">Loading products…</p>
+            <p class="catalog-hint">Click a card to add or remove it from your routine</p>
+          </div>
+
+          <!-- Products Grid -->
+          <div id="productsContainer" class="products-grid"></div>
+        </section>
+
+        <!-- Right Column: Sticky Workbench (Selected Products + AI Chat) -->
+        <aside class="workbench-column" aria-label="Routine Builder Workbench">
+          <!-- Selected Products Panel -->
+          <section id="selected-routine" class="selected-products" aria-labelledby="selectedHeading">
+            <div class="panel-header">
+              <div>
+                <h2 id="selectedHeading">Selected Products</h2>
+                <p id="selectedCount" class="panel-meta">0 products selected</p>
+              </div>
+              <button
+                type="button"
+                id="clearAllBtn"
+                class="text-action-btn"
+                hidden
+              >
+                Clear All
+              </button>
+            </div>
+
+            <div id="selectedProductsList" class="selected-list"></div>
+
+            <button type="button" id="generateRoutine" class="generate-btn">
+              <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+              <span>Generate Routine</span>
+            </button>
+          </section>
+
+          <!-- AI Chatbox Panel -->
+          <section id="advisor" class="chatbox" aria-labelledby="chatHeading">
+            <div class="panel-header chat-panel-header">
+              <div>
+                <h2 id="chatHeading">Let's Build Your Routine</h2>
+                <p class="panel-meta">L'Oréal Beauty &amp; Routine Advisor</p>
+              </div>
+              <button
+                type="button"
+                id="webSearchToggle"
+                class="web-search-toggle"
+                aria-pressed="true"
+                title="Toggle real-time web search grounding"
+              >
+                <i class="fa-solid fa-globe" aria-hidden="true"></i>
+                <span id="webSearchLabel">Web Search: On</span>
+              </button>
+            </div>
+
+            <div id="chatWindow" class="chat-window" role="log" aria-live="polite"></div>
+
+            <form id="chatForm" class="chat-form">
+              <label for="userInput" class="visually-hidden">Ask a follow-up question</label>
+              <input
+                id="userInput"
+                name="userInput"
+                type="text"
+                placeholder="Ask about your routine, skincare, haircare, or makeup…"
+                autocomplete="off"
+                required
+              />
+              <button type="submit" id="sendBtn" aria-label="Send message">
+                <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+              </button>
+            </form>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>&copy; 2026 L'Oréal Smart Routine &amp; Product Advisor.</p>
+        <nav aria-label="Footer Links">
+          <a href="#catalog">Product Catalog</a>
+          <a href="#selected-routine">Routine Builder</a>
+          <a href="#advisor">Beauty Advisor</a>
         </nav>
-      </footer>
+      </div>
+    </footer>
+
+    <!-- Accessible Product Details Modal -->
+    <div
+      id="productModal"
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+      hidden
+    >
+      <div class="modal-dialog">
+        <button
+          type="button"
+          id="closeModalBtn"
+          class="modal-close-btn"
+          aria-label="Close product details"
+        >
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+
+        <div class="modal-layout">
+          <div class="modal-image-stage" id="modalImageStage">
+            <img id="modalImage" src="" alt="" referrerpolicy="no-referrer" />
+          </div>
+          <div class="modal-body">
+            <p id="modalMeta" class="product-meta"></p>
+            <h2 id="modalTitle" class="modal-title"></h2>
+            <p id="modalDescription" class="modal-description"></p>
+            <div class="modal-actions">
+              <button type="button" id="modalToggleSelectBtn" class="modal-primary-btn">
+                Add to Routine
+              </button>
+              <button type="button" id="modalCloseSecondaryBtn" class="modal-secondary-btn">
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
